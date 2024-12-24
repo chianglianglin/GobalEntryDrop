@@ -17,5 +17,12 @@
     },
     "permissions": [
         "storage"
-    ]
+    ],
+    "content_scripts": [
+        {
+          "matches": ["https://aws.amazon.com/*"],
+          "js": ["content.js"]
+        }
+      ],
+    "host_permissions": ["https://aws.amazon.com/*"]
 }
