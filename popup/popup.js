@@ -9,11 +9,37 @@ const startButton = document.getElementById("startButtonId")
 const endButton = document.getElementById("stopButtonId")
 
 
-startButton.onclick = function() {
-    console.log("startDate",startDateIdElement.value);
+startButton.onclick = () => {
+    const prefs = {
+        locationId : locationIdElement.value ,
+        startDate : startDateIdElement.value ,
+        endDate : endDateIdElement.value 
+    }
+    chrome.runtime.sendMessage({event : "onStart" , prefs})
+    // if (startDateIdElement.value){
+    //     console.log("startDate is ",startDateIdElement.value);
+    // }else{
+    //     console.log("startDate is not valid? ");
+    // }
+    
 }
 
-endButton.onclick = function() {
-    console.log("endDate", endDateIdElement.value);
+endButton.onclick = () => {
+    chrome.runtime.sendMessage({event : "onStop"})
+    // console.log("endDate", endDateIdElement.value);
 }
+chrome.storage.local.get(["locationId","startDate","endDate"],(result) => {
+    const{locationId, startDate,endDate} = result
+
+    if (locationId){
+        locationIdElement.value = locationId
+    }
+
+    if (startDate) {
+        startDateIdElement.value = startDate
+    }
+    if (endDate) {
+        endDateIdElement.value = endDate
+    }
+})
 
